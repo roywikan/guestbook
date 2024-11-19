@@ -27,7 +27,7 @@
   <p id="thank-you-message" style="display:none;">Thank you for your message!</p>
   <hr>
   <script>
-  fetch('/.netlify/functions/guestbook')
+  fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
     .then(response => response.json())
     .then(data => {
       const guestbookContainer = document.getElementById('guestbook');
