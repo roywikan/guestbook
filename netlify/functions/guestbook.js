@@ -1,13 +1,15 @@
 // netlify/functions/guestbook.js
 
-const { parse } = require('querystring'); // Digunakan untuk parsing data formulir
 const fs = require('fs');
 const path = require('path');
+const { parse } = require('querystring');
 
 const guestbookFilePath = path.join(__dirname, '../../guestbook.json');
 
+// Fungsi untuk menangani GET dan POST
 exports.handler = async (event, context) => {
   if (event.httpMethod === "POST") {
+    // Menangani pengiriman formulir
     const formData = await new Promise((resolve, reject) => {
       let data = "";
       event.body.on('data', chunk => data += chunk);
@@ -28,7 +30,6 @@ exports.handler = async (event, context) => {
         : [];
       
       currentData.push(newEntry);
-
       fs.writeFileSync(guestbookFilePath, JSON.stringify(currentData, null, 2));
 
       return {
@@ -41,9 +42,30 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ message: "Error saving guestbook entry", error }),
       };
     }
+  } else if (event.httpMethod === "GET") {
+    // Menangani permintaan GET untuk menampilkan data
+    try {
+      const data = fs.existsSync(guestbookFilePath)
+        ? JSON.parse(fs.readFileSync(guestbookFilePath))
+        : [];
+      
+      return {
+        statusCode: 200,
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",  // CORS agar bisa diakses dari GitHub Pages
+        },
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ message: "Error reading guestbook data", error }),
+      };
+    }
   } else {
     return {
-      statusCode: 405,
+      statusCode: 405,  // Method Not Allowed
       body: JSON.stringify({ message: "Method Not Allowed" }),
     };
   }
