@@ -27,13 +27,9 @@
   <p id="thank-you-message" style="display:none;">Thank you for your message!</p>
   <hr>
   <script>
+
 fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    return response.json();
-  })
+  .then(response => response.json())
   .then(data => {
     const guestbookContainer = document.getElementById('guestbook');
     data.forEach(entry => {
@@ -48,6 +44,7 @@ fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
     });
   })
   .catch(error => console.error('Error fetching guestbook entries:', error));
+
 
 </script>
 
