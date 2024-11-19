@@ -12,7 +12,7 @@
   <p>Leave a message below:</p>
   
   <!-- Guestbook Form -->
-  <form name="guestbook" method="POST" data-netlify="true" netlify>
+  <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
     <label for="name">Your Name:</label>
     <input type="text" name="name" id="name" required><br>
     
@@ -20,6 +20,7 @@
     <textarea name="message" id="message" rows="5" required></textarea><br>
 
     <button type="submit">Submit</button>
+    <div data-netlify-recaptcha="true"></div>
   </form>
 
   <!-- Thank You Message -->
