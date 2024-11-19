@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guestbook</title>
+</head>
+<body>
+  <h1>Welcome to My Guestbook!</h1>
+  <p>Leave a message below:</p>
+  
+  <!-- Guestbook Form -->
+  <form name="guestbook" method="POST" data-netlify="true">
+    <label for="name">Your Name:</label>
+    <input type="text" name="name" id="name" required><br>
+    
+    <label for="message">Your Message:</label><br>
+    <textarea name="message" id="message" rows="5" required></textarea><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Thank You Message -->
+  <p id="thank-you-message" style="display:none;">Thank you for your message!</p>
+</body>
+</html>
