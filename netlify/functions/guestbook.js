@@ -1,4 +1,4 @@
-memicu // netlify/functions/guestbook.js
+//memicu netlify/functions/guestbook.js
 
 const fs = require('fs');
 const path = require('path');
