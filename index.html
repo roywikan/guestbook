@@ -10,7 +10,7 @@
 <body>
   <header>
     <h1>Gimana Komentarmu?</h1>
-    <p>Experimental comment log by a <a href="https://com-net.org/" style="color: #fff; text-decoration: underline;">coder</a></p>
+    <p>Experimental comment log by a <a href="https://com-net.org/" style="color: #fff; text-decoration: none;">coder</a></p>
   </header>
   
   <!-- Guestbook Form -->
@@ -52,120 +52,16 @@
   <!-- Section to display the guestbook entries -->
 <br>
 
-  <script>
-    // Apply text formatting to textarea
-    function applyFormat(command) {
-      const textarea = document.getElementById("message");
-      const startPos = textarea.selectionStart;
-      const endPos = textarea.selectionEnd;
-      const selectedText = textarea.value.substring(startPos, endPos);
 
-      let formattedText = selectedText;
 
-      switch(command) {
-        case 'bold':
-          formattedText = `<b>${selectedText}</b>`;
-          break;
-        case 'italic':
-          formattedText = `<i>${selectedText}</i>`;
-          break;
-        case 'h2':
-          formattedText = `<h2>${selectedText}</h2>`;
-          break;
-        case 'h3':
-          formattedText = `<h3>${selectedText}</h3>`;
-          break;
-        case 'h4':
-          formattedText = `<h4>${selectedText}</h4>`;
-          break;
-        case 'ul':
-          formattedText = `<ul><li>${selectedText}</li></ul>`;
-          break;
-        case 'ol':
-          formattedText = `<ol><li>${selectedText}</li></ol>`;
-          break;
-        case 'li':
-          formattedText = `<li>${selectedText}</li>`;
-          break;
-        case 'p':
-          formattedText = `<p>${selectedText}</p>`;
-          break;
-        default:
-          return;
-      }
 
-      textarea.setRangeText(formattedText);
-    }
-
-    // Insert an image at the cursor position in the textarea
-    function insertImage() {
-      const imgURL = prompt("Enter image URL:");
-      if (imgURL) {
-        const textarea = document.getElementById("message");
-        const startPos = textarea.selectionStart;
-        const endPos = textarea.selectionEnd;
-        const imgTag = `<img src="${imgURL}" alt="image" />`;
-        textarea.setRangeText(imgTag);
-      }
-    }
-  </script>
+  <script src="button.js"></script>
+  <script src="tarikdatanetlify.js"></script>
 
 
 
   
 
-  <script>
-
-
-    // Fetch form submissions from Netlify API
-    
-    const siD = '59fee68f-147e-432f-9c3f-d871ffb4ba9f'; // Replace with your Site ID
-    const foD = '673d007e95d88a0008661480'; // Replace with your Form ID
-    const apD = `https://api.netlify.com/api/v1/sites/${siD}/forms/${foD}/submissions`;
-    
-    const headers = {
-      'Authorization': 'Bearer nfp_rsNDJVw6rjQJJHrqd2h4qr3UBKpDrfLXc37b', // Replace with your API token
-    };
-
-    fetch(apD, { headers })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (data && data.length > 0) {
-          const submissionsContainer = document.getElementById('komentarmu');
-          data.forEach(submission => {
-            const submissionElement = document.createElement('div');
-            submissionElement.classList.add('submission-entry');
-            submissionElement.innerHTML = `
-              <h3>${submission.data.name}</h3>
-              <p>${submission.data.message}</p>
-              <p><small>${new Date(submission.created_at).toLocaleString()}</small></p>
-            `;
-            submissionsContainer.appendChild(submissionElement);
-          });
-        } else {
-          console.log('No form submissions found.');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching submissions:', error);
-      });
-
-
-    
- 
-  
-  
-
-
-
-
-  
-  </script>
     
  
     <div style="text-align:center;">
