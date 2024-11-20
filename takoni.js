@@ -12,34 +12,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Function to validate CAPTCHA input
-function validateCaptcha() {
+function validateCaptcha(event) {
+  // Prevent form submission if CAPTCHA validation fails
   const userAnswer = parseInt(document.getElementById('captchaInput').value);
   const correctAnswer = parseInt(document.getElementById('captchaAnswer').value);
 
   if (userAnswer !== correctAnswer) {
     alert('Jawaban CAPTCHA salah. Coba lagi.');
-    return false; // Prevent form submission
+    event.preventDefault(); // Prevent form submission
+    return false;
   }
 
-  return true; // Allow form submission
+  // Proceed with form submission if CAPTCHA is correct
+  return true;
 }
 
-// Toolbar formatting function
-function applyFormat(tag) {
-  const textarea = document.getElementById('message');
-  const start = textarea.selectionStart;
-  const end = textarea.selectionEnd;
-  const selectedText = textarea.value.substring(start, end);
-
-  // Wrap selected text with chosen tag
-  const before = `<${tag}>`;
-  const after = `</${tag}>`;
-  const newText = before + selectedText + after;
-
-  textarea.value = 
-    textarea.value.substring(0, start) + 
-    newText + 
-    textarea.value.substring(end);
-}
-
-// Optional: You can add functions for insertImage and insertLink if necessary
+// Function to handle form submit
+document.querySelector('form[name="guestbook"]').addEventListener('submit', function(event) {
+  // Validate CAPTCHA before form submission
+  if (!validateCaptcha(event)) {
+    return; // Prevent form from submitting if CAPTCHA is incorrect
+  }
+  
+  // If CAPTCHA is valid, form will be submitted normally
+  console.log('Form is being submitted');  // Debug: Check if form is submitting
+});
