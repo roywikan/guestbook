@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guestbook</title>
+  <title>Komentarmu?</title>
 </head>
 
 <body>
   <h1>Komentarmu?</h1>
-  <p>Leave a message below:</p>
+  <p>hanya percobaan</p>
   
   <!-- Guestbook Form -->
   <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
@@ -26,18 +26,19 @@
   <p id="thank-you-message" style="display:none;">Thank you for your message!</p>
 
   <!-- Section to display the guestbook entries -->
-  <h2>Previous Entries</h2>
-  <div id="guestbook"></div>
+  <h2>List:</h2>
+  <div id="komentarmu"></div>
 
   <hr>
 
   <script>
     // Fetch guestbook entries from Netlify Function
+    /*
     fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
-          const guestbookContainer = document.getElementById('guestbook');
+          const guestbookContainer = document.getElementById('komentarmu');
           data.forEach(entry => {
             const entryElement = document.createElement('div');
             entryElement.classList.add('guestbook-entry');
@@ -53,17 +54,18 @@
         }
       })
       .catch(error => console.error('Error fetching guestbook entries:', error));
+      */
 
     // Fetch form submissions from Netlify API
-    const siteId = '59fee68f-147e-432f-9c3f-d871ffb4ba9f'; // Replace with your Site ID
-    const formId = '673d007e95d88a0008661480'; // Replace with your Form ID
-    const apiUrl = `https://api.netlify.com/api/v1/sites/${siteId}/forms/${formId}/submissions`;
+    const siD = '59fee68f-147e-432f-9c3f-d871ffb4ba9f'; // Replace with your Site ID
+    const foD = '673d007e95d88a0008661480'; // Replace with your Form ID
+    const apD = `https://api.netlify.com/api/v1/sites/${siD}/forms/${foD}/submissions`;
     
     const headers = {
       'Authorization': 'Bearer nfp_rsNDJVw6rjQJJHrqd2h4qr3UBKpDrfLXc37b', // Replace with your API token
     };
 
-    fetch(apiUrl, { headers })
+    fetch(apD, { headers })
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -72,7 +74,7 @@
       })
       .then(data => {
         if (data && data.length > 0) {
-          const submissionsContainer = document.getElementById('guestbook');
+          const submissionsContainer = document.getElementById('komentarmu');
           data.forEach(submission => {
             const submissionElement = document.createElement('div');
             submissionElement.classList.add('submission-entry');
