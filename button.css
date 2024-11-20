@@ -11,6 +11,7 @@
   max-width: 50px; /* Lebar maximum tombol */
   padding: 10px; /* Ruang di dalam tombol */
   font-size: 14px; /* Ukuran font tombol */
+  font-weight: bold;
   border: 1px solid #ccc; /* Gaya border */
   border-radius: 5px; /* Membuat tombol lebih halus */
 }
@@ -23,6 +24,6 @@
   #toolbar button {
     padding: 8px; /* Kurangi padding pada layar kecil */
     font-size: 12px; /* Kurangi ukuran font */
-    font-weight: bold;
+    
   }
 }
