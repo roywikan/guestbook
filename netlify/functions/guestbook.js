@@ -2,10 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const { parse } = require('querystring');
 
-const guestbookFilePath = path.join(__dirname, '../../guestbook.json');  // Pastikan jalur file benar
+// Tentukan path ke file JSON yang akan menyimpan data guestbook
+const guestbookFilePath = path.join(__dirname, '../../guestbook.json');  // Periksa jalur file dengan benar
 
 exports.handler = async (event, context) => {
   if (event.httpMethod === "POST") {
+    // Menunggu data formulir dari body request
     const formData = await new Promise((resolve, reject) => {
       let data = "";
       event.body.on('data', chunk => data += chunk);
@@ -13,6 +15,7 @@ exports.handler = async (event, context) => {
       event.body.on('error', err => reject(err));
     });
 
+    // Parsing data dari form
     const formFields = parse(formData);
     const newEntry = {
       name: formFields.name,
@@ -20,19 +23,26 @@ exports.handler = async (event, context) => {
       date: new Date().toISOString(),
     };
 
+    console.log("Data formulir yang diterima:", newEntry);  // Konfirmasi data yang diterima dari formulir
+
     try {
       let currentData = [];
       
-      // Cek apakah file JSON ada dan baca datanya jika ada
+      // Deteksi apakah file guestbook.json sudah ada
       if (fs.existsSync(guestbookFilePath)) {
+        console.log("File guestbook.json ditemukan, membaca data...");
         currentData = JSON.parse(fs.readFileSync(guestbookFilePath, 'utf-8'));
+      } else {
+        console.log("File guestbook.json tidak ditemukan, membuat file baru...");
       }
-      
-      // Menambahkan entri baru ke array data
+
+      // Menambahkan data baru ke dalam array data
       currentData.push(newEntry);
-      
-      // Menyimpan data kembali ke file JSON
+
+      // Menyimpan data ke dalam file guestbook.json
       fs.writeFileSync(guestbookFilePath, JSON.stringify(currentData, null, 2));
+
+      console.log("Data berhasil disimpan ke guestbook.json");
 
       return {
         statusCode: 200,
@@ -47,10 +57,13 @@ exports.handler = async (event, context) => {
     }
   } else if (event.httpMethod === "GET") {
     try {
+      // Membaca data dari guestbook.json jika ada
       const data = fs.existsSync(guestbookFilePath)
         ? JSON.parse(fs.readFileSync(guestbookFilePath))
         : [];
-      
+
+      console.log("Data berhasil ditarik dari guestbook.json:", data);
+
       return {
         statusCode: 200,
         body: JSON.stringify(data),
@@ -60,6 +73,7 @@ exports.handler = async (event, context) => {
         },
       };
     } catch (error) {
+      console.error('Error reading guestbook data:', error);
       return {
         statusCode: 500,
         body: JSON.stringify({ message: "Error reading guestbook data", error }),
