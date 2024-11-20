@@ -8,6 +8,7 @@
 #toolbar button {
   flex: 1 1 auto; /* Tombol akan menyesuaikan lebar */
   min-width: 40px; /* Lebar minimum tombol */
+  max-width: 50px; /* Lebar maximum tombol */
   padding: 10px; /* Ruang di dalam tombol */
   font-size: 14px; /* Ukuran font tombol */
   border: 1px solid #ccc; /* Gaya border */
@@ -22,5 +23,6 @@
   #toolbar button {
     padding: 8px; /* Kurangi padding pada layar kecil */
     font-size: 12px; /* Kurangi ukuran font */
+    font-weight: bold;
   }
 }
