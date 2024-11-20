@@ -27,7 +27,7 @@
   </header>
   
     <!-- Guestbook Form -->
-  <form name="guestbook" method="POST" data-netlify-recaptcha="FALSE" data-netlify="true" netlify>
+  <form name="guestbook" method="POST" data-netlify-recaptcha="FALSE" onsubmit="return validateCaptcha();" data-netlify="true" netlify>
     <label for="name">Your Name / Title :</label>
     <input type="text" name="name" id="name" required>
     <br>
