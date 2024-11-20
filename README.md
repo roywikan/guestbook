@@ -1,2 +1,2 @@
 # guestbook
-guestbook script without webhosting
+nulise ning netlify
