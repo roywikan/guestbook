@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guestbook</title>
 </head>
-
-  
 <body>
   <h1>Welcome to My Guestbook!</h1>
   <p>Leave a message below:</p>
@@ -25,32 +23,45 @@
 
   <!-- Thank You Message -->
   <p id="thank-you-message" style="display:none;">Thank you for your message!</p>
-  <hr>
-  <script>
-
-fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
-  .then(response => response.json())
-  .then(data => {
-    const guestbookContainer = document.getElementById('guestbook');
-    data.forEach(entry => {
-      const entryElement = document.createElement('div');
-      entryElement.classList.add('guestbook-entry');
-      entryElement.innerHTML = `
-        <h3>${entry.name}</h3>
-        <p>${entry.message}</p>
-        <p><small>${new Date(entry.date).toLocaleString()}</small></p>
-      `;
-      guestbookContainer.appendChild(entryElement);
-    });
-  })
-  .catch(error => console.error('Error fetching guestbook entries:', error));
-
-
-
-
-</script>
-
   
+  <!-- Guestbook Entries Container -->
+  <div id="guestbook"></div>
 
+  <hr>
+
+  <script>
+    // Mengambil dan menampilkan data dari Netlify Functions (guestbook.json)
+    fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
+      .then(response => response.json())
+      .then(data => {
+        const guestbookContainer = document.getElementById('guestbook');
+        guestbookContainer.innerHTML = ""; // Clear previous entries
+        data.forEach(entry => {
+          const entryElement = document.createElement('div');
+          entryElement.classList.add('guestbook-entry');
+          entryElement.innerHTML = `
+            <h3>${entry.name}</h3>
+            <p>${entry.message}</p>
+            <p><small>${new Date(entry.date).toLocaleString()}</small></p>
+          `;
+          guestbookContainer.appendChild(entryElement);
+        });
+      })
+      .catch(error => console.error('Error fetching guestbook entries:', error));
+
+    // Konfirmasi setelah pengiriman form
+    const form = document.querySelector('form[name="guestbook"]');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();  // Mencegah halaman refresh
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+
+      // Menampilkan pesan terima kasih
+      document.getElementById('thank-you-message').style.display = "block";
+
+      // Reset form setelah pengiriman
+      form.reset();
+    });
+  </script>
 </body>
 </html>
