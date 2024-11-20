@@ -1,0 +1,15 @@
+{
+  "name": "guestbook",
+  "version": "1.0.0",
+  "description": "A serverless guestbook function for Netlify",
+  "main": "guestbook.js",
+  "scripts": {
+    "start": "netlify dev",
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.1"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
