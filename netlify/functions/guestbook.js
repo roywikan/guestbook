@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-exports.handler = async (event, context) => {
+export async function handler(event, context) {
   try {
     const { SITE_ID_NYA, FORM_ID, API_TOKEN } = process.env;
 
@@ -38,4 +38,4 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ error: error.message }),
     };
   }
-};
+}
