@@ -25,8 +25,8 @@
     <p>Experimental comment log by a <a href="https://com-net.org/" style="color: #fff; text-decoration: none;">coder</a></p>
   </header>
   
-    <!-- Guestbook Form -->
-  <form name="guestbook" method="POST"  data-netlify="true" netlify>
+  <!-- Guestbook Form -->
+  <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
     <label for="name">Your Name / Title :</label>
     <input type="text" name="name" id="name" required>
     <br>
@@ -52,6 +52,9 @@
     <br>
     <p id="thank-you-message">You may use the format buttons above</p>
     <button type="submit">Submit</button><br>
+        <br>
+    <div data-netlify-recaptcha="true"></div>
+    <!-- Thank You Message -->
     <br>
       <br><br>
   <br><br>
