@@ -5,7 +5,7 @@ exports.handler = async function (event, context) {
   const FORM_ID = process.env.FORM_ID;
   const API_TOKEN = process.env.API_TOKEN;
 
-  const apiURL = `https://api.netlify.com/api/v1/sites/${SITE_ID_NYA}/forms/${FORM_ID}/guestbook`;
+  const apiURL = `https://api.netlify.com/api/v1/sites/${SITE_ID_NYA}/forms/${FORM_ID}/submission`;
 
   try {
     const response = await fetch(apiURL, {
