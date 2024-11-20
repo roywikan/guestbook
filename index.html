@@ -51,6 +51,21 @@ fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
 
 
 
+const apiUrl = 'https://api.netlify.com/api/v1/sites/YOUR_SITE_ID/forms/673d007e95d88a0008661480/submissions';
+
+const headers = {
+  'Authorization': 'Bearer nfp_rsNDJVw6rjQJJHrqd2h4qr3UBKpDrfLXc37b', // Ganti dengan token API yang didapat dari Netlify
+};
+
+fetch(apiUrl, { headers })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Submission Data:', data);
+    // Proses data sesuai kebutuhan
+  })
+  .catch(error => {
+    console.error('Error fetching submissions:', error);
+  });
 
 
 </script>
