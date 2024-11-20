@@ -56,8 +56,18 @@
     <br>
     
     <!-- Thank You Message -->
-  <div class="g-recaptcha" data-sitekey="6LdAvUIUAAAAAHjrjmjtNTcXyKm0WKwefLp-dQv9"></div>
+  <!-- div class="g-recaptcha" data-sitekey="6LdAvUIUAAAAAHjrjmjtNTcXyKm0WKwefLp-dQv9"></div -->
+    
   </form>
+
+  <form id="captchaForm" onsubmit="return validateCaptcha();">
+  <label for="captcha">Berapa hasil dari <span id="num1"></span> + <span id="num2"></span>?</label>
+  <input type="number" id="captchaInput" required>
+  <input type="hidden" id="captchaAnswer">
+  <button type="submit">Submit</button>
+</form>
+<script src="takoni.js" defer></script>
+
 
 
   <div id="komentarmu"></div>
