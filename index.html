@@ -80,6 +80,10 @@
 
   const apiEndpoint = 'https://guestbook.com-net.org/.netlify/functions/guestbook';
 
+  // URL endpoint untuk memanggil Netlify Functions yang dinamai guestbook.js
+  const apiEndpoint = 'https://your-site-name.netlify.app/.netlify/functions/guestbook';
+
+  // Mengambil data dari Netlify Functions
   fetch(apiEndpoint)
     .then(response => {
       if (!response.ok) {
@@ -88,6 +92,7 @@
       return response.json();
     })
     .then(data => {
+      // Jika ada data, render ke elemen `#komentarmu`
       if (data && data.length > 0) {
         const submissionsContainer = document.getElementById('komentarmu');
         data.forEach(submission => {
@@ -107,6 +112,8 @@
     .catch(error => {
       console.error('Error fetching submissions:', error);
     });
+
+
 
 
 
