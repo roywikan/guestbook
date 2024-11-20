@@ -2,11 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { parse } = require('querystring');
 
-const guestbookFilePath = path.join(__dirname, '../../guestbook.json');
+const guestbookFilePath = path.join(__dirname, '../../guestbook.json');  // Pastikan jalur file benar
 
 exports.handler = async (event, context) => {
   if (event.httpMethod === "POST") {
-    // Menangani pengiriman data formulir
     const formData = await new Promise((resolve, reject) => {
       let data = "";
       event.body.on('data', chunk => data += chunk);
@@ -22,11 +21,17 @@ exports.handler = async (event, context) => {
     };
 
     try {
-      const currentData = fs.existsSync(guestbookFilePath)
-        ? JSON.parse(fs.readFileSync(guestbookFilePath))
-        : [];
+      let currentData = [];
       
+      // Cek apakah file JSON ada dan baca datanya jika ada
+      if (fs.existsSync(guestbookFilePath)) {
+        currentData = JSON.parse(fs.readFileSync(guestbookFilePath, 'utf-8'));
+      }
+      
+      // Menambahkan entri baru ke array data
       currentData.push(newEntry);
+      
+      // Menyimpan data kembali ke file JSON
       fs.writeFileSync(guestbookFilePath, JSON.stringify(currentData, null, 2));
 
       return {
@@ -34,13 +39,13 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ message: "Guestbook entry added successfully!" }),
       };
     } catch (error) {
+      console.error('Error saving guestbook entry:', error);
       return {
         statusCode: 500,
         body: JSON.stringify({ message: "Error saving guestbook entry", error }),
       };
     }
   } else if (event.httpMethod === "GET") {
-    // Menangani permintaan GET untuk mengambil data
     try {
       const data = fs.existsSync(guestbookFilePath)
         ? JSON.parse(fs.readFileSync(guestbookFilePath))
@@ -60,10 +65,5 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ message: "Error reading guestbook data", error }),
       };
     }
-  } else {
-    return {
-      statusCode: 405,  // Method Not Allowed jika metode tidak didukung
-      body: JSON.stringify({ message: "Method Not Allowed" }),
-    };
   }
 };
