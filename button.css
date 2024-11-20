@@ -1,7 +1,7 @@
 #toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px; /* Memberikan jarak antar tombol */
+  gap: 8px; /* Memberikan jarak antar tombol */
   justify-content: center; /* Membuat toolbar berada di tengah */
 }
 
