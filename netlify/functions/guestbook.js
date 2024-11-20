@@ -1,24 +1,28 @@
-const fetch = require('node-fetch'); // Netlify supports node-fetch
+const fetch = require('node-fetch');
 
-exports.handler = async function (event, context) {
-  const SITE_ID = process.env.SITE_ID_NYA;
-  const FORM_ID = process.env.FORM_ID;
-  const API_TOKEN = process.env.API_TOKEN;
-
-  const apiURL = `https://api.netlify.com/api/v1/sites/${SITE_ID_NYA}/forms/${FORM_ID}/submission`;
-
+exports.handler = async (event, context) => {
   try {
+    const { SITE_ID_NYA, FORM_ID, API_TOKEN } = process.env;
+
+    if (!SITE_ID_NYA || !FORM_ID || !API_TOKEN) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: 'Missing environment variables.',
+        }),
+      };
+    }
+
+    const apiURL = `https://api.netlify.com/api/v1/sites/${SITE_ID_NYA}/forms/${FORM_ID}/submissions`;
+
     const response = await fetch(apiURL, {
       headers: {
-        'Authorization': `Bearer ${API_TOKEN}`,
+        Authorization: `Bearer ${API_TOKEN}`,
       },
     });
 
     if (!response.ok) {
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ error: 'Failed to fetch submissions' }),
-      };
+      throw new Error(`Netlify API error: ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -28,9 +32,10 @@ exports.handler = async function (event, context) {
       body: JSON.stringify(data),
     };
   } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal Server Error', details: error.message }),
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };
