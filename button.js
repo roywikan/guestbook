@@ -53,7 +53,7 @@ function insertImage() {
     const height = prompt("Enter image height (optional):", "");
     
     // Create the <img> tag with optional height
-    const imgTag = `<img src="${imgURL}" alt="image" width="${width}" ${height ? `height="${height}"` : ""} />`;
+    const imgTag = `<img loading="lazy" src="${imgURL}" alt="image" width="${width}" ${height ? `height="${height}"` : ""} />`;
     
     const textarea = document.getElementById("message");
     const startPos = textarea.selectionStart;
