@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('captchaAnswer').value = num1 + num2;
 });
 
+// Function to validate CAPTCHA input
 function validateCaptcha() {
   const userAnswer = parseInt(document.getElementById('captchaInput').value);
   const correctAnswer = parseInt(document.getElementById('captchaAnswer').value);
@@ -22,3 +23,23 @@ function validateCaptcha() {
 
   return true; // Allow form submission
 }
+
+// Toolbar formatting function
+function applyFormat(tag) {
+  const textarea = document.getElementById('message');
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const selectedText = textarea.value.substring(start, end);
+
+  // Wrap selected text with chosen tag
+  const before = `<${tag}>`;
+  const after = `</${tag}>`;
+  const newText = before + selectedText + after;
+
+  textarea.value = 
+    textarea.value.substring(0, start) + 
+    newText + 
+    textarea.value.substring(end);
+}
+
+// Optional: You can add functions for insertImage and insertLink if necessary
