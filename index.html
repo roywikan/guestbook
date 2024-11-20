@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apa Komentarmu?</title>
+  <meta name="description" content="Guestbook COM-NET.ORG is an inovation of guestbook html that can have text formatting and image linking">
+  <title>Guestbook</title>
   
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="pagination.css">
@@ -21,32 +22,6 @@
     <p>Experimental comment log by a <a href="https://com-net.org/" style="color: #fff; text-decoration: none;">coder</a></p>
   </header>
   
-
-
-
-  <div id="komentarmu"></div>
-
-
-
-  <!-- Section to display the guestbook entries -->
-<br>
-
-
-
-
-  <script src="button.js"></script>
-  <!-- script src="tarikdatanetlify.js"></script -->
-  <script src="tarikdatanetlify_dibuat_pagination.js"></script>
-
-
-
-    <!-- Pagination Controls -->
-  <div class="pagination">
-    <button id="prevPage" onclick="changePage(-1)">Previous</button>
-    <button id="nextPage" onclick="changePage(1)">Next</button>
-  </div>
-
-<hr><br>
     <!-- Guestbook Form -->
   <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
     <label for="name">Your Name / Title :</label>
@@ -75,10 +50,36 @@
     <p id="thank-you-message">You may use the format buttons above</p>
     <button type="submit">Submit</button><br>
     <br>
-    <div data-netlify-recaptcha="true"></div>
+    
     <!-- Thank You Message -->
   
   </form>
+
+
+  <div id="komentarmu"></div>
+
+
+
+  <!-- Section to display the guestbook entries -->
+<br>
+
+
+
+
+  <script src="button.js"></script>
+  <!-- script src="tarikdatanetlify.js"></script -->
+  <script src="tarikdatanetlify_dibuat_pagination.js"></script>
+<div data-netlify-recaptcha="true"></div>
+
+
+    <!-- Pagination Controls -->
+  <div class="pagination">
+    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+    <button id="nextPage" onclick="changePage(1)">Next</button>
+  </div>
+
+<hr><br>
+
     
  <br><hr>
     <div style="text-align:center;">
