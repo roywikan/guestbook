@@ -54,4 +54,30 @@
         textarea.setRangeText(imgTag);
       }
     }
+
+function insertLink() {
+  const url = prompt("Enter the URL:", "https://");
+  const linkText = prompt("Enter the text for the link:", "Click here");
+
+  if (url && linkText) {
+    const relOption = confirm("Should the link be nofollow?\nClick 'OK' for nofollow, or 'Cancel' for dofollow.");
+    const relAttribute = relOption ? 'rel="nofollow"' : 'rel="dofollow"';
+
+    const textarea = document.querySelector("textarea");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    const beforeText = textarea.value.substring(0, start);
+    const afterText = textarea.value.substring(end);
+    const selectedText = textarea.value.substring(start, end) || linkText;
+
+    const link = `<a href="${url}" ${relAttribute} target="_blank">${selectedText}</a>`;
+    textarea.value = beforeText + link + afterText;
+
+    // Place cursor after the inserted link
+    textarea.selectionStart = textarea.selectionEnd = start + link.length;
+    textarea.focus();
+  }
+}
+
   
