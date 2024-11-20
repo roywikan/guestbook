@@ -61,7 +61,9 @@ function insertLink() {
 
   if (url && linkText) {
     const relOption = confirm("Should the link be nofollow?\nClick 'OK' for nofollow, or 'Cancel' for dofollow.");
-    const relAttribute = relOption ? 'rel="nofollow"' : 'rel="dofollow"';
+    //const relAttribute = relOption ? 'rel="nofollow"' : 'rel="dofollow"';
+    const relAttribute = relOption ? 'rel="nofollow"' : '';
+
 
     const textarea = document.querySelector("textarea");
     const start = textarea.selectionStart;
