@@ -1,24 +1,22 @@
 import fetch from 'node-fetch';
 
 export async function handler(event, context) {
-    try {
-        const response = await fetch('https://api.example.com');
-        const data = await response.json();
-        return {
-            statusCode: 200,
-            body: JSON.stringify(data),
-        };
-    } catch (error) {
-        return {
-            statusCode: 500,
-            body: `Error: ${error.message}`,
-        };
-    }
-}
-
-
-export async function handler(event, context) {
   try {
+    // Parsing body jika ada payload dari event
+    const { action } = event.queryStringParameters || {};
+
+    // Jika `action` adalah 'fetchApiExample', panggil fungsi pertama
+    if (action === 'fetchApiExample') {
+      const response = await fetch('https://api.example.com');
+      const data = await response.json();
+
+      return {
+        statusCode: 200,
+        body: JSON.stringify(data),
+      };
+    }
+
+    // Logika untuk Netlify API
     const { SITE_ID_NYA, FORM_ID, API_TOKEN } = process.env;
 
     if (!SITE_ID_NYA || !FORM_ID || !API_TOKEN) {
