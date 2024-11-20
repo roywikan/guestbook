@@ -1,15 +1,12 @@
-//memicu netlify/functions/guestbook.js
-
 const fs = require('fs');
 const path = require('path');
 const { parse } = require('querystring');
 
 const guestbookFilePath = path.join(__dirname, '../../guestbook.json');
 
-// Fungsi untuk menangani GET dan POST
 exports.handler = async (event, context) => {
   if (event.httpMethod === "POST") {
-    // Menangani pengiriman formulir
+    // Menangani pengiriman data formulir
     const formData = await new Promise((resolve, reject) => {
       let data = "";
       event.body.on('data', chunk => data += chunk);
@@ -43,7 +40,7 @@ exports.handler = async (event, context) => {
       };
     }
   } else if (event.httpMethod === "GET") {
-    // Menangani permintaan GET untuk menampilkan data
+    // Menangani permintaan GET untuk mengambil data
     try {
       const data = fs.existsSync(guestbookFilePath)
         ? JSON.parse(fs.readFileSync(guestbookFilePath))
@@ -54,7 +51,7 @@ exports.handler = async (event, context) => {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",  // CORS agar bisa diakses dari GitHub Pages
+          "Access-Control-Allow-Origin": "*",  // Mengizinkan akses dari domain manapun
         },
       };
     } catch (error) {
@@ -65,7 +62,7 @@ exports.handler = async (event, context) => {
     }
   } else {
     return {
-      statusCode: 405,  // Method Not Allowed
+      statusCode: 405,  // Method Not Allowed jika metode tidak didukung
       body: JSON.stringify({ message: "Method Not Allowed" }),
     };
   }
