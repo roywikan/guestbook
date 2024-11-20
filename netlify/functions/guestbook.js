@@ -1,83 +1,41 @@
+// netlify/functions/guestbook.js
 const fs = require('fs');
 const path = require('path');
-const { parse } = require('querystring');
-
-// Tentukan path ke file JSON yang akan menyimpan data guestbook
-const guestbookFilePath = path.join(__dirname, '../../guestbook.json');  // Periksa jalur file dengan benar
 
 exports.handler = async (event, context) => {
+  // Mendapatkan data dari form
   if (event.httpMethod === "POST") {
-    // Menunggu data formulir dari body request
-    const formData = await new Promise((resolve, reject) => {
-      let data = "";
-      event.body.on('data', chunk => data += chunk);
-      event.body.on('end', () => resolve(data));
-      event.body.on('error', err => reject(err));
-    });
+    const body = JSON.parse(event.body);
+    const { name, message } = body;
 
-    // Parsing data dari form
-    const formFields = parse(formData);
-    const newEntry = {
-      name: formFields.name,
-      message: formFields.message,
-      date: new Date().toISOString(),
-    };
-
-    console.log("Data formulir yang diterima:", newEntry);  // Konfirmasi data yang diterima dari formulir
-
+    // Lokasi file JSON
+    const filePath = path.join(__dirname, 'guestbook.json');
+    
     try {
-      let currentData = [];
-      
-      // Deteksi apakah file guestbook.json sudah ada
-      if (fs.existsSync(guestbookFilePath)) {
-        console.log("File guestbook.json ditemukan, membaca data...");
-        currentData = JSON.parse(fs.readFileSync(guestbookFilePath, 'utf-8'));
-      } else {
-        console.log("File guestbook.json tidak ditemukan, membuat file baru...");
-      }
+      // Membaca file JSON yang sudah ada
+      let data = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath)) : [];
+      const newEntry = { name, message, date: new Date() };
 
-      // Menambahkan data baru ke dalam array data
-      currentData.push(newEntry);
+      // Menambahkan entry baru
+      data.push(newEntry);
 
-      // Menyimpan data ke dalam file guestbook.json
-      fs.writeFileSync(guestbookFilePath, JSON.stringify(currentData, null, 2));
-
-      console.log("Data berhasil disimpan ke guestbook.json");
+      // Menyimpan kembali data ke file JSON
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 
       return {
         statusCode: 200,
-        body: JSON.stringify({ message: "Guestbook entry added successfully!" }),
+        body: JSON.stringify({ message: "Success!" })
       };
     } catch (error) {
-      console.error('Error saving guestbook entry:', error);
       return {
         statusCode: 500,
-        body: JSON.stringify({ message: "Error saving guestbook entry", error }),
-      };
-    }
-  } else if (event.httpMethod === "GET") {
-    try {
-      // Membaca data dari guestbook.json jika ada
-      const data = fs.existsSync(guestbookFilePath)
-        ? JSON.parse(fs.readFileSync(guestbookFilePath))
-        : [];
-
-      console.log("Data berhasil ditarik dari guestbook.json:", data);
-
-      return {
-        statusCode: 200,
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",  // Mengizinkan akses dari domain manapun
-        },
-      };
-    } catch (error) {
-      console.error('Error reading guestbook data:', error);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ message: "Error reading guestbook data", error }),
+        body: JSON.stringify({ error: 'Error saving guestbook entry' })
       };
     }
   }
+
+  return {
+    statusCode: 405,
+    body: JSON.stringify({ error: 'Method Not Allowed' })
+  };
 };
