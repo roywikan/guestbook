@@ -1,52 +1,36 @@
-// netlify/functions/guestbook.js
-const fs = require('fs');
-const path = require('path');
+const fetch = require('node-fetch'); // Netlify supports node-fetch
 
-exports.handler = async (event, context) => {
-  const filePath = path.join(__dirname, 'guestbook.json');
+exports.handler = async function (event, context) {
+  const SITE_ID = process.env.SITE_ID_NYA;
+  const FORM_ID = process.env.FORM_ID;
+  const API_TOKEN = process.env.API_TOKEN;
 
-  // Jika metode HTTP adalah POST, simpan data
-  if (event.httpMethod === "POST") {
-    const body = JSON.parse(event.body);
-    const { name, message } = body;
+  const apiURL = `https://api.netlify.com/api/v1/sites/${SITE_ID}/forms/${FORM_ID}/guestbook`;
 
-    try {
-      let data = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath)) : [];
-      const newEntry = { name, message, date: new Date() };
-      data.push(newEntry);
-      fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  try {
+    const response = await fetch(apiURL, {
+      headers: {
+        'Authorization': `Bearer ${API_TOKEN}`,
+      },
+    });
 
+    if (!response.ok) {
       return {
-        statusCode: 200,
-        body: JSON.stringify({ message: "Guestbook entry saved successfully!" })
-      };
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Error saving guestbook entry' })
+        statusCode: response.status,
+        body: JSON.stringify({ error: 'Failed to fetch submissions' }),
       };
     }
-  }
 
-  // Jika metode HTTP adalah GET, ambil data
-  if (event.httpMethod === "GET") {
-    try {
-      const data = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath)) : [];
-      return {
-        statusCode: 200,
-        body: JSON.stringify(data)
-      };
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Error reading guestbook data' })
-      };
-    }
-  }
+    const data = await response.json();
 
-  // Jika metode HTTP selain GET atau POST
-  return {
-    statusCode: 405,
-    body: JSON.stringify({ error: 'Method Not Allowed' })
-  };
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data),
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Internal Server Error', details: error.message }),
+    };
+  }
 };
