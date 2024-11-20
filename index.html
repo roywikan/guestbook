@@ -74,9 +74,13 @@
 */
 
     
-  const apD = `/api/submissions`;
+ 
   
-  fetch(apD)
+  
+
+  const apiEndpoint = 'https://guestbook.com-net.org/.netlify/functions/guestbook';
+
+  fetch(apiEndpoint)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -103,6 +107,8 @@
     .catch(error => {
       console.error('Error fetching submissions:', error);
     });
+
+
 
   
   </script>
