@@ -173,9 +173,11 @@
   <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
     <label for="name">Your Name / Title :</label>
     <input type="text" name="name" id="name" required>
-    <br><br>
+    <br>
+    <br>
     <label for="message">Your Message / Contents :</label>
-    <br><br>
+    <br>
+    <br>
     <div id="toolbar">
       <button type="button" onclick="applyFormat('bold')">B</button>
       <button type="button" onclick="applyFormat('italic')">I</button>
@@ -191,15 +193,17 @@
     <textarea name="message" id="message" rows="5" required></textarea>
     <br>
     <p id="thank-you-message">You may use format buttons above</p>
-    
-    <br>
-    <div data-netlify-recaptcha="true"></div>
-    <br>
     <button type="submit">Submit</button>
     <br>
+    <div data-netlify-recaptcha="true"></div>
+    <!-- Thank You Message -->
+  
   </form>
 
+
   <div id="komentarmu"></div>
+    <!-- Section to display the guestbook entries -->
+<br>
 
   <!-- Pagination Controls -->
   <div class="pagination">
