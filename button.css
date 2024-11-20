@@ -12,6 +12,7 @@
   padding: 10px; /* Ruang di dalam tombol */
   font-size: 14px; /* Ukuran font tombol */
   font-weight: bold;
+  margin: 15px;
   border: 1px solid #ccc; /* Gaya border */
   border-radius: 5px; /* Membuat tombol lebih halus */
 }
