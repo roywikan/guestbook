@@ -1,6 +1,23 @@
 import fetch from 'node-fetch';
 
 export async function handler(event, context) {
+    try {
+        const response = await fetch('https://api.example.com');
+        const data = await response.json();
+        return {
+            statusCode: 200,
+            body: JSON.stringify(data),
+        };
+    } catch (error) {
+        return {
+            statusCode: 500,
+            body: `Error: ${error.message}`,
+        };
+    }
+}
+
+
+export async function handler(event, context) {
   try {
     const { SITE_ID_NYA, FORM_ID, API_TOKEN } = process.env;
 
