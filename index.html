@@ -8,7 +8,7 @@
 
   
 <body>
-  <h1>Test Guestbook!</h1>
+  <h1>OLD My Guestbook!</h1>
   <p>Leave a message below:</p>
   
   <!-- Guestbook Form -->
@@ -25,13 +25,6 @@
 
   <!-- Thank You Message -->
   <p id="thank-you-message" style="display:none;">Thank you for your message!</p>
-
-  
-  <!-- Guestbook Entries Container -->
-  <div id="guestbook"></div>
-
-
-  
   <hr>
   <script>
 
@@ -54,19 +47,7 @@ fetch('https://guestbook.com-net.org/.netlify/functions/guestbook')
 
 
 
-    // Konfirmasi setelah pengiriman form
-    const form = document.querySelector('form[name="guestbook"]');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();  // Mencegah halaman refresh
-      const name = document.getElementById('name').value;
-      const message = document.getElementById('message').value;
 
-      // Menampilkan pesan terima kasih
-      document.getElementById('thank-you-message').style.display = "block";
-
-      // Reset form setelah pengiriman
-      form.reset();
-    });
 </script>
 
   
