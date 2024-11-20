@@ -1,0 +1,22 @@
+    /* Pagination Styles */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      background-color: #003366;
+      color: white;
+      padding: 5px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 0 5px;
+    }
+
+    .pagination button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
