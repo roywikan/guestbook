@@ -21,7 +21,33 @@
     <p>Experimental comment log by a <a href="https://com-net.org/" style="color: #fff; text-decoration: none;">coder</a></p>
   </header>
   
-  <!-- Guestbook Form -->
+
+
+
+  <div id="komentarmu"></div>
+
+
+
+  <!-- Section to display the guestbook entries -->
+<br>
+
+
+
+
+  <script src="button.js"></script>
+  <!-- script src="tarikdatanetlify.js"></script -->
+  <script src="tarikdatanetlify_dibuat_pagination.js"></script>
+
+
+
+    <!-- Pagination Controls -->
+  <div class="pagination">
+    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+    <button id="nextPage" onclick="changePage(1)">Next</button>
+  </div>
+
+<br>
+    <!-- Guestbook Form -->
   <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
     <label for="name">Your Name / Title :</label>
     <input type="text" name="name" id="name" required>
@@ -53,31 +79,6 @@
     <!-- Thank You Message -->
   
   </form>
-
-
-  <div id="komentarmu"></div>
-
-
-
-  <!-- Section to display the guestbook entries -->
-<br>
-
-
-
-
-  <script src="button.js"></script>
-  <!-- script src="tarikdatanetlify.js"></script -->
-  <script src="tarikdatanetlify_dibuat_pagination.js"></script>
-
-
-
-    <!-- Pagination Controls -->
-  <div class="pagination">
-    <button id="prevPage" onclick="changePage(-1)">Previous</button>
-    <button id="nextPage" onclick="changePage(1)">Next</button>
-  </div>
-
-
     
  <br><hr>
     <div style="text-align:center;">
