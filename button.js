@@ -43,17 +43,29 @@
       textarea.setRangeText(formattedText);
     }
 
-    // Insert an image at the cursor position in the textarea
-    function insertImage() {
-      const imgURL = prompt("Enter image URL:");
-      if (imgURL) {
-        const textarea = document.getElementById("message");
-        const startPos = textarea.selectionStart;
-        const endPos = textarea.selectionEnd;
-        const imgTag = `<img src="${imgURL}" alt="image" />`;
-        textarea.setRangeText(imgTag);
-      }
-    }
+
+
+// Insert an image at the cursor position in the textarea
+function insertImage() {
+  const imgURL = prompt("Enter image URL:");
+  if (imgURL) {
+    const width = prompt("Enter image width (e.g., 300):", "300");
+    const height = prompt("Enter image height (optional):", "");
+    
+    // Create the <img> tag with optional height
+    const imgTag = `<img src="${imgURL}" alt="image" width="${width}" ${height ? `height="${height}"` : ""} />`;
+    
+    const textarea = document.getElementById("message");
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+    
+    // Insert the <img> tag into the textarea
+    textarea.setRangeText(imgTag, startPos, endPos, "end");
+  }
+}
+
+
+
 
 function insertLink() {
   const url = prompt("Enter the URL:", "https://");
