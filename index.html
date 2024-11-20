@@ -159,10 +159,10 @@ textarea {
   
   <!-- Guestbook Form -->
   <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
-    <label for="name">Your Name:</label>
+    <label for="name">Your Name / Title :</label>
     <input type="text" name="name" id="name" required><br>
     
-    <label for="message">Your Message:</label><br>
+    <label for="message">Your Message / Contents :</label><br>
     <div id="toolbar">
       <button type="button" onclick="applyFormat('bold')">B</button>
       <button type="button" onclick="applyFormat('italic')">I</button>
@@ -175,11 +175,12 @@ textarea {
       <button type="button" onclick="applyFormat('p')">P</button>
       <button type="button" onclick="insertImage()">IMG</button>
     </div>
-    <textarea name="message" id="message" rows="5" required></textarea><br>
-<p id="thank-you-message">You may use format buttons above</p>
+    <textarea name="message" id="message" rows="5" required></textarea>
+    <br>
+    <p id="thank-you-message">You may use format buttons above</p>
     <button type="submit">Submit</button><br>
     <div data-netlify-recaptcha="true"></div>
-      <!-- Thank You Message -->
+    <!-- Thank You Message -->
   
   </form>
 
