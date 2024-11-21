@@ -55,6 +55,8 @@
     <p id="thank-you-message">You may use the format buttons above</p>
 
      <input type="hidden" name="slug" id="slug-input" /> <!-- Kolom slug -->
+    <!-- Add a div to display the generated slug -->
+<p>Generated Slug: <span id="slug-preview"></span></p>
     <button type="submit">Submit</button><br>
         <br>
     <div data-netlify-recaptcha="true"></div>
@@ -72,46 +74,63 @@
 
 
 
+<script>
+  // Fungsi untuk membuat slug dari string
+  function createSlug(input) {
+    return input
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '') // Hapus karakter spesial
+      .trim()
+      .replace(/\s+/g, '-'); // Ganti spasi dengan tanda hubung
+  }
 
-  <script>
-    // Fungsi untuk membuat slug dari string
-    function createSlug(input) {
-      return input
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, '') // Hapus karakter spesial
-        .trim()
-        .replace(/\s+/g, '-'); // Ganti spasi dengan tanda hubung
-    }
+  // Fungsi utama untuk membuat slug unik
+  async function generateSlug(name, message) {
+    let slug = name ? createSlug(name) : createSlug(message);
 
-    // Fungsi utama untuk membuat slug unik
-    async function generateSlug(name, message) {
-      let slug = name ? createSlug(name) : createSlug(message);
+    // Tambahkan sufiks angka acak 5 digit
+    const randomSuffix = Math.floor(10000 + Math.random() * 90000); // 5 digit angka acak
+    slug = `${slug}-${randomSuffix}`;
 
-      // Tambahkan sufiks angka acak 5 digit
-      const randomSuffix = Math.floor(10000 + Math.random() * 90000); // 5 digit angka acak
-      slug = `${slug}-${randomSuffix}`;
+    return slug;
+  }
 
-      return slug;
-    }
+  // Update slug preview on input
+  async function updateSlug() {
+    const name = document.querySelector('#name').value;
+    const message = document.querySelector('#message').value;
 
-    // Implementasi saat form dikirim
-    document.querySelector('form').addEventListener('submit', async (event) => {
-      event.preventDefault(); // Cegah pengiriman form default
+    const slug = await generateSlug(name, message);
+    
+    // Update the hidden input field with the generated slug
+    document.querySelector('#slug-input').value = slug;
 
-      const form = event.target;
-      const name = form.querySelector('[name="name"]').value;
-      const message = form.querySelector('[name="message"]').value;
+    // Display the slug in the "slug-preview" element
+    document.querySelector('#slug-preview').textContent = slug;
+  }
 
-      // Buat slug unik
-      const slug = await generateSlug(name, message);
+  // Event listeners for real-time update of the slug
+  document.querySelector('#name').addEventListener('input', updateSlug);
+  document.querySelector('#message').addEventListener('input', updateSlug);
 
-      // Masukkan slug ke input hidden
-      form.querySelector('#slug-input').value = slug;
+  // Form submission handling
+  document.querySelector('form').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Cegah pengiriman form default
 
-      // Kirim form
-      form.submit();
-    });
-  </script>
+    const form = event.target;
+    const name = form.querySelector('[name="name"]').value;
+    const message = form.querySelector('[name="message"]').value;
+
+    // Buat slug unik
+    const slug = await generateSlug(name, message);
+
+    // Masukkan slug ke input hidden
+    form.querySelector('#slug-input').value = slug;
+
+    // Kirim form
+    form.submit();
+  });
+</script>
 
 
 
