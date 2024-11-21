@@ -4,12 +4,12 @@ let allSubmissions = [];
 
 // Fetch all submissions
 function fetchSubmissions() {
-  const siD = '59fee68f-147e-432f-9c3f-d871ffb4ba9f'; // Replace with your Site ID
-  const foD = '673d007e95d88a0008661480'; // Replace with your Form ID
+  const siD = '59fee68f-147e-432f-9c3f-d871ffb4ba9f';
+  const foD = '673d007e95d88a0008661480';
   const apD = `https://api.netlify.com/api/v1/sites/${siD}/forms/${foD}/submissions`;
 
   const headers = {
-    'Authorization': 'Bearer nfp_rsNDJVw6rjQJJHrqd2h4qr3UBKpDrfLXc37b', // Replace with your API token
+    'Authorization': 'Bearer nfp_rsNDJVw6rjQJJHrqd2h4qr3UBKpDrfLXc37b',
   };
 
   return fetch(apD, { headers })
@@ -20,12 +20,24 @@ function fetchSubmissions() {
       return response.json();
     })
     .then(data => {
+      console.log('Fetched submissions:', data);
       allSubmissions = data;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const title = urlParams.get('title');
+      console.log('Query parameter title:', title);
+
+      if (title) {
+        displaySingleSubmission(decodeURIComponent(title));
+      } else {
+        getSubmissionByPath();
+      }
     })
     .catch(error => {
       console.error('Error fetching submissions:', error);
     });
 }
+
 
 // Display a single submission
 function displaySingleSubmission(submission) {
@@ -77,18 +89,24 @@ function displaySubmissions() {
 // Handle path-based routing
 function getSubmissionByPath() {
   const path = window.location.pathname.substring(1); // Remove '/'
+  console.log('Path from URL:', path);
+
   if (path) {
     const decodedTitle = decodeURIComponent(path.replace(/-/g, ' '));
+    console.log('Decoded title:', decodedTitle);
+
     const submission = allSubmissions.find(sub => sub.data.name === decodedTitle);
     if (submission) {
       displaySingleSubmission(submission);
     } else {
+      console.log('Available submissions:', allSubmissions);
       document.getElementById('komentarmu').innerHTML = '<p>Submission tidak ditemukan.</p>';
     }
   } else {
     displaySubmissions(); // Display all submissions if no path
   }
 }
+
 
 // Handle hash-based routing
 function getSubmissionByHash() {
