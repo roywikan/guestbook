@@ -1,9 +1,8 @@
+let currentPage = 1;
+const itemsPerPage = 10;
+let allSubmissions = [];
 
-    let currentPage = 1;
-    const itemsPerPage = 10;
-    let allSubmissions = [];
-
-//////////////////////////////berubah untuk single sub//////////////////////////
+// Fetch all submissions
 function fetchSubmissions() {
   const siD = '59fee68f-147e-432f-9c3f-d871ffb4ba9f'; // Replace with your Site ID
   const foD = '673d007e95d88a0008661480'; // Replace with your Form ID
@@ -13,7 +12,7 @@ function fetchSubmissions() {
     'Authorization': 'Bearer nfp_rsNDJVw6rjQJJHrqd2h4qr3UBKpDrfLXc37b', // Replace with your API token
   };
 
-  fetch(apD, { headers })
+  return fetch(apD, { headers })
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -22,25 +21,14 @@ function fetchSubmissions() {
     })
     .then(data => {
       allSubmissions = data;
-
-      // Cek apakah URL mengandung title untuk menampilkan satu item
-      const urlParams = new URLSearchParams(window.location.search);
-      const title = urlParams.get('title'); // e.g., ?title=encoded-title
-
-      if (title) {
-        displaySingleSubmission(decodeURIComponent(title));
-      } else {
-        displaySubmissions();
-      }
     })
     .catch(error => {
       console.error('Error fetching submissions:', error);
     });
 }
 
-function displaySingleSubmission(title) {
-  const submission = allSubmissions.find(sub => sub.data.name === title);
-
+// Display a single submission
+function displaySingleSubmission(submission) {
   const singleSubmissionContainer = document.getElementById('single-submission');
   singleSubmissionContainer.style.display = 'block';
   const submissionsContainer = document.getElementById('komentarmu');
@@ -55,48 +43,85 @@ function displaySingleSubmission(title) {
       </div>
     `;
   } else {
-    singleSubmissionContainer.innerHTML = `<p>No submission found for the title: ${title}</p>`;
+    singleSubmissionContainer.innerHTML = `<p>Submission tidak ditemukan.</p>`;
   }
 }
 
-//////////// Fungsi lainnya tetap seperti sebelumnya
+// Display all submissions
+function displaySubmissions() {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentPageSubmissions = allSubmissions.slice(startIndex, endIndex);
 
+  const submissionsContainer = document.getElementById('komentarmu');
+  submissionsContainer.style.display = 'block';
+  const singleSubmissionContainer = document.getElementById('single-submission');
+  singleSubmissionContainer.style.display = 'none';
 
-    function displaySubmissions() {
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const currentPageSubmissions = allSubmissions.slice(startIndex, endIndex);
+  submissionsContainer.innerHTML = '';
 
-      const submissionsContainer = document.getElementById('komentarmu');
-      submissionsContainer.innerHTML = '';
+  currentPageSubmissions.forEach(submission => {
+    const submissionElement = document.createElement('div');
+    submissionElement.classList.add('submission-entry');
+    submissionElement.innerHTML = `
+      <h3>${submission.data.name}</h3>
+      <p>${submission.data.message}</p>
+      <p><small>${new Date(submission.created_at).toLocaleString()}</small></p>
+    `;
+    submissionsContainer.appendChild(submissionElement);
+  });
 
-      currentPageSubmissions.forEach(submission => {
-        const submissionElement = document.createElement('div');
-        submissionElement.classList.add('submission-entry');
-        submissionElement.innerHTML = `
-          <h3>${submission.data.name}</h3>
-          <p>${submission.data.message}</p>
-          <p><small>${new Date(submission.created_at).toLocaleString()}</small></p>
-        `;
-        submissionsContainer.appendChild(submissionElement);
-      });
+  updatePaginationButtons();
+}
 
-      updatePaginationButtons();
+// Handle path-based routing
+function getSubmissionByPath() {
+  const path = window.location.pathname.substring(1); // Remove '/'
+  if (path) {
+    const decodedTitle = decodeURIComponent(path.replace(/-/g, ' '));
+    const submission = allSubmissions.find(sub => sub.data.name === decodedTitle);
+    if (submission) {
+      displaySingleSubmission(submission);
+    } else {
+      document.getElementById('komentarmu').innerHTML = '<p>Submission tidak ditemukan.</p>';
     }
+  } else {
+    displaySubmissions(); // Display all submissions if no path
+  }
+}
 
-    function changePage(direction) {
-      currentPage += direction;
-      displaySubmissions();
+// Handle hash-based routing
+function getSubmissionByHash() {
+  const hash = window.location.hash.substring(1); // Remove #
+  if (hash) {
+    const decodedTitle = decodeURIComponent(hash.replace(/-/g, ' '));
+    const submission = allSubmissions.find(sub => sub.data.name === decodedTitle);
+    if (submission) {
+      displaySingleSubmission(submission);
+    } else {
+      document.getElementById('komentarmu').innerHTML = '<p>Submission tidak ditemukan.</p>';
     }
+  } else {
+    displaySubmissions(); // Display all submissions if no hash
+  }
+}
 
-    function updatePaginationButtons() {
-      const prevButton = document.getElementById('prevPage');
-      const nextButton = document.getElementById('nextPage');
+// Pagination controls
+function changePage(direction) {
+  currentPage += direction;
+  displaySubmissions();
+}
 
-      prevButton.disabled = currentPage === 1;
-      nextButton.disabled = currentPage * itemsPerPage >= allSubmissions.length;
-    }
+function updatePaginationButtons() {
+  const prevButton = document.getElementById('prevPage');
+  const nextButton = document.getElementById('nextPage');
 
-    // Fetch the form submissions when the page loads
-    fetchSubmissions();
-  
+  prevButton.disabled = currentPage === 1;
+  nextButton.disabled = currentPage * itemsPerPage >= allSubmissions.length;
+}
+
+// Initialize fetch and routing
+fetchSubmissions().then(() => {
+  getSubmissionByPath(); // For rewrite rules
+  // getSubmissionByHash(); // Uncomment for hash routing
+});
