@@ -91,9 +91,9 @@
     let nameWords = name.trim().split(/\s+/); // Pisahkan name menjadi kata-kata
 
     // Jika name kurang dari 2 kata, tambahkan kata-kata dari message
-    if (nameWords.length < 2) {
+    if (nameWords.length < 5) {
       const messageWords = message.trim().split(/\s+/);
-      nameWords = nameWords.concat(messageWords.slice(0, 2 - nameWords.length)); // Ambil kata tambahan dari message
+      nameWords = nameWords.concat(messageWords.slice(0, 5 - nameWords.length)); // Ambil kata tambahan dari message
     }
 
     // Buat slug dengan nama yang sudah digabung
