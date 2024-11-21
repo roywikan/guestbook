@@ -54,14 +54,15 @@
     <br>
     <p id="thank-you-message">You may use the format buttons above</p>
 
-     <!-- input type="hidden" name="slug" id="slug-input" / --> <!-- Kolom slug -->
+     <!-- input type="hidden" name="slug" id="slug" / --> <!-- Kolom slug -->
     <!-- Add a div to display the generated slug -->
 <!--- p>Generated Slug: <span id="slug-preview"></span></p -->
 
   <!-- Editable slug input -->
-  <label for="slug-input">Generated Slug (editable):</label>
-  <input type="text" name="slug" id="slug-input"  />
+  <label for="slug">Generated Slug (editable):</label>
+  <input type="text" name="slug" id="slug"  />
   <p id="slug-preview" style="font-style: italic; color: gray;">Slug will update as you type...</p>
+    <input type="text" name="roy" id="roy"  />
   <br>
 
 
@@ -130,7 +131,7 @@
     const slug = await generateSlug(name, message);
     
     // Update the hidden input field with the generated slug
-    document.querySelector('#slug-input').value = slug;
+    document.querySelector('#slug').value = slug;
 
     // Display the slug in the "slug-preview" element
     document.querySelector('#slug-preview').textContent = slug;
@@ -152,7 +153,7 @@
     const slug = await generateSlug(name, message);
 
     // Masukkan slug ke input hidden
-    form.querySelector('#slug-input').value = slug;
+    form.querySelector('#slug').value = slug;
 
     // Kirim form
     form.submit();
