@@ -54,9 +54,20 @@
     <br>
     <p id="thank-you-message">You may use the format buttons above</p>
 
-     <input type="hidden" name="slug" id="slug-input" /> <!-- Kolom slug -->
+     <!-- input type="hidden" name="slug" id="slug-input" / --> <!-- Kolom slug -->
     <!-- Add a div to display the generated slug -->
-<p>Generated Slug: <span id="slug-preview"></span></p>
+<!--- p>Generated Slug: <span id="slug-preview"></span></p -->
+
+  <!-- Editable slug input -->
+  <label for="slug-input">Generated Slug (editable):</label>
+  <input type="text" name="slug" id="slug-input" readonly />
+  <p id="slug-preview" style="font-style: italic; color: gray;">Slug will update as you type...</p>
+  <br>
+
+
+
+
+    
     <button type="submit">Submit</button><br>
         <br>
     <div data-netlify-recaptcha="true"></div>
