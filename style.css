@@ -19,6 +19,9 @@ img {
     max-width: 96%;
     width: -webkit-fill-available;
     height: auto;
+    margin: 20px;
+    float: left;
+    border-radius: 10px;
    }
 
 
