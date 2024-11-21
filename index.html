@@ -79,7 +79,8 @@
   function createSlug(input) {
     return input
       .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, '') // Hapus karakter spesial
+      .replace(/[^a-z0-9\s<>]/g, '') // Hapus karakter spesial kecuali < dan >
+      .replace(/[<>]/g, '-') // Ganti < dan > dengan tanda hubung
       .trim()
       .replace(/\s+/g, '-'); // Ganti spasi dengan tanda hubung
   }
