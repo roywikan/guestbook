@@ -91,13 +91,18 @@
     let nameWords = name.trim().split(/\s+/); // Pisahkan name menjadi kata-kata
 
     // Jika name kurang dari 2 kata, tambahkan kata-kata dari message
-    if (nameWords.length < 5) {
+    if (nameWords.length < 7) {
       const messageWords = message.trim().split(/\s+/);
-      nameWords = nameWords.concat(messageWords.slice(0, 5 - nameWords.length)); // Ambil kata tambahan dari message
+      nameWords = nameWords.concat(messageWords.slice(0, 7 - nameWords.length)); // Ambil kata tambahan dari message
     }
 
-    // Buat slug dengan nama yang sudah digabung
-    let slug = createSlug(nameWords.join(' '));
+      // Gabungkan kata-kata dan batasi maksimum 7 kata
+  const allWords = nameWords.slice(0, 7); // Ambil maksimum 7 kata
+
+  // Buat slug dari gabungan kata
+  let slug = createSlug(allWords.join(' '));
+
+
 
     // Tambahkan angka acak untuk membuat slug unik
     const randomSuffix = Math.floor(10000 + Math.random() * 90000); // 5-digit random number
