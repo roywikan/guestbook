@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Guestbook COM-NET.ORG is an inovation of guestbook html that can have text formatting and image linking">
+  <title>Guestbook</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pagination.css">
+  <link rel="stylesheet" href="button.css">
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://www.google.com">
+<link rel="preconnect" href="https://www.gstatic.com">
+
+
+</head>
+
+<body>
+  <header>
+    <h1><a href="/" style="color: #fff; text-decoration: none;">Apa Komentarmu?</a></h1>
+    <p>Experimental comment log by a <a href="https://com-net.org/" style="color: #fff; text-decoration: none;">coder</a></p>
+  </header>
+  
+  <!-- Guestbook Form -->
+  <form name="guestbook" method="POST" data-netlify-recaptcha="true" data-netlify="true" netlify>
+    <label for="name">Your Name / Title :</label>
+    <input type="text" name="name" id="name" required>
+    <br>
+    <br>
+    <label for="message">Your Message / Contents :</label>
+    <br>
+    <br>
+<div id="toolbar">
+  <button type="button" onclick="applyFormat('bold')">B</button>
+  <button type="button" onclick="applyFormat('italic')"><i>I</i></button>
+  <button type="button" onclick="applyFormat('p')">P</button>
+  <button type="button" onclick="applyFormat('h2')">H2</button>
+  <button type="button" onclick="applyFormat('h3')">H3</button>
+  <button type="button" onclick="applyFormat('h4')">H4</button>
+  <button type="button" onclick="applyFormat('ul')">UL</button>
+  <button type="button" onclick="applyFormat('ol')">OL</button>
+  <button type="button" onclick="applyFormat('li')">LI</button>      
+  <button type="button" onclick="insertImage()">IMG</button>
+  <button type="button" onclick="insertLink()">Link</button>
+</div>
+
+    <textarea name="message" id="message" rows="20" required></textarea>
+    <br>
+    <p id="thank-you-message">You may use the format buttons above</p>
+    <button type="submit">Submit</button><br>
+        <br>
+    <div data-netlify-recaptcha="true"></div>
+    <!-- Thank You Message -->
+    <br>
+      <br><br>
+  <br><br>
+    <!-- Thank You Message -->
+ 
+
+
+
+    
+  </form>
+
+
+
+
+
+  <div id="komentarmu"></div>
+
+
+
+  <!-- Section to display the guestbook entries -->
+<br>
+
+
+
+
+  <script src="button.js"></script>
+  <!-- script src="tarikdatanetlify.js" defer></script -->
+  <script src="tarikdatanetlify_dibuat_pagination.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+    <!-- Pagination Controls -->
+  <div class="pagination">
+    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+    <button id="nextPage" onclick="changePage(1)">Next</button>
+  </div>
+
+<hr><br>
+
+    
+ <br><hr>
+    <div style="text-align:center;">
+      <p>Coded when I have no <a href="https://job.web.id/">jobs</a></p> <p>Computer Network <a href="https://com-net.org/">Computer-Network</a></p>
+    </div>
+
+
+
+
+</body>
+</html>
